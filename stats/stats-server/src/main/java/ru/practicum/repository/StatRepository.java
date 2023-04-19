@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 public interface StatRepository extends JpaRepository<EndpointHit, Integer> {
+    //
     @Query("SELECT NEW ru.practicum.ViewStatsDto(h.app, h.uri, COUNT(h.ip)) " +
             "FROM EndpointHit h " +
             "WHERE h.uri IN :uris " +
