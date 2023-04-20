@@ -31,13 +31,13 @@ public class StatService {
     public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean isUnique) {
         List<ViewStatsDto> stats;
 
-        if(uris.isEmpty()){
+        if (uris.isEmpty()) {
             if (isUnique) {
                 stats = statRepository.getUniqueStatsByBetweenStartAndEndGroupByUri(start, end);
             } else {
                 stats = statRepository.getStatsByBetweenStartAndEndGroupByUri(start, end);
             }
-        } else{
+        } else {
             if (isUnique) {
                 stats = statRepository.getUniqueStatsByUrisAndBetweenStartAndEndGroupByUri(start, end, uris);
             } else {
