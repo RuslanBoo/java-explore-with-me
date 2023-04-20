@@ -30,10 +30,19 @@ public class StatService {
 
     public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean isUnique) {
         List<ViewStatsDto> stats;
-        if (isUnique) {
-            stats = statRepository.getUniqueStatsByUrisAndBetweenStartAndEndGroupByUri(start, end, uris);
-        } else {
-            stats = statRepository.getStatsByUrisAndBetweenStartAndEndGroupByUri(start, end, uris);
+
+        if(uris.isEmpty()){
+            if (isUnique) {
+                stats = statRepository.getUniqueStatsByBetweenStartAndEndGroupByUri(start, end);
+            } else {
+                stats = statRepository.getStatsByBetweenStartAndEndGroupByUri(start, end);
+            }
+        } else{
+            if (isUnique) {
+                stats = statRepository.getUniqueStatsByUrisAndBetweenStartAndEndGroupByUri(start, end, uris);
+            } else {
+                stats = statRepository.getStatsByUrisAndBetweenStartAndEndGroupByUri(start, end, uris);
+            }
         }
 
         return new ResponseEntity<>(stats, HttpStatus.OK);
