@@ -18,7 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StatClientImpl implements StatClient {
     @Value("${stats-server.url}")
-    private final String server_url;
+    private final String serverURL;
     private final RestTemplate restTemplate;
     private final HttpHeaders headers;
 
@@ -41,7 +41,7 @@ public class StatClientImpl implements StatClient {
         HttpEntity<EndpointHitDto> entity = new HttpEntity<>(endpointHitDto, headers);
 
         return this.restTemplate.postForEntity(
-                server_url + "/hit",
+                serverURL + "/hit",
                 entity,
                 Object.class);
     }
@@ -59,7 +59,7 @@ public class StatClientImpl implements StatClient {
         HttpEntity request = new HttpEntity(headers);
 
         return restTemplate.exchange(
-                server_url + "/stats?start={start}&end={end}&uris={uris}",
+                serverURL + "/stats?start={start}&end={end}&uris={uris}",
                 HttpMethod.GET,
                 request,
                 Object.class,
