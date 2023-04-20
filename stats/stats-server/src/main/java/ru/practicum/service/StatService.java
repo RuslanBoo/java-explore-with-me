@@ -33,9 +33,9 @@ public class StatService {
 
         if (uris.isEmpty()) {
             if (isUnique) {
-                stats = statRepository.getUniqueStatsByBetweenStartAndEndGroupByUri(start, end);
+                stats = statRepository.getUniqueStatsBetweenStartAndEndGroupByUri(start, end);
             } else {
-                stats = statRepository.getStatsByBetweenStartAndEndGroupByUri(start, end);
+                stats = statRepository.getStatsBetweenStartAndEndGroupByUri(start, end);
             }
         } else {
             if (isUnique) {
