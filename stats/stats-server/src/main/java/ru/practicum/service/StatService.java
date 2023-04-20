@@ -31,17 +31,18 @@ public class StatService {
     public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean isUnique) {
         List<ViewStatsDto> stats;
 
-        if (uris.isEmpty()) {
-            if (isUnique) {
-                stats = statRepository.getUniqueStatsBetweenStartAndEndGroupByUri(start, end);
-            } else {
-                stats = statRepository.getStatsBetweenStartAndEndGroupByUri(start, end);
-            }
-        } else {
+        if (uris != null && !uris.isEmpty()) {
+
             if (isUnique) {
                 stats = statRepository.getUniqueStatsByUrisAndBetweenStartAndEndGroupByUri(start, end, uris);
             } else {
                 stats = statRepository.getStatsByUrisAndBetweenStartAndEndGroupByUri(start, end, uris);
+            }
+        } else {
+            if (isUnique) {
+                stats = statRepository.getUniqueStatsBetweenStartAndEndGroupByUri(start, end);
+            } else {
+                stats = statRepository.getStatsBetweenStartAndEndGroupByUri(start, end);
             }
         }
 
