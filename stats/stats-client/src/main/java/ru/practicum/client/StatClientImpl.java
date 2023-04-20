@@ -1,6 +1,5 @@
 package ru.practicum.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,19 +7,20 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.EndpointHitDto;
-import ru.practicum.ViewStatsDto;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class StatClientImpl implements StatClient {
     @Value("${stats-server.url}")
-    private final String SERVER_URL;
+    private final String server_url;
     private final RestTemplate restTemplate;
     private final HttpHeaders headers;
-    private final ObjectMapper objectMapper;
 
     private void prepareHeader() {
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -28,7 +28,7 @@ public class StatClientImpl implements StatClient {
     }
 
     @Override
-    public void saveHit(String app, String uri, String ip, LocalDateTime timestamp) {
+    public ResponseEntity<Object> saveHit(String app, String uri, String ip, LocalDateTime timestamp) {
         prepareHeader();
 
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
@@ -39,19 +39,16 @@ public class StatClientImpl implements StatClient {
                 .build();
 
         HttpEntity<EndpointHitDto> entity = new HttpEntity<>(endpointHitDto, headers);
-        ResponseEntity<String> response = this.restTemplate.postForEntity(
-                SERVER_URL + "/hit",
-                entity,
-                String.class);
 
-        if (response.getStatusCode() != HttpStatus.CREATED) {
-            throw new RuntimeException("Http request failed");
-        }
+        return this.restTemplate.postForEntity(
+                server_url + "/hit",
+                entity,
+                Object.class);
     }
 
     @SneakyThrows
     @Override
-    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris) {
+    public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, List<String> uris) {
         prepareHeader();
 
         Map<String, Object> params = new HashMap<>();
@@ -60,18 +57,13 @@ public class StatClientImpl implements StatClient {
         params.put("uris", uris);
 
         HttpEntity request = new HttpEntity(headers);
-        ResponseEntity<String> response = restTemplate.exchange(
-                SERVER_URL + "/stats?start={start}&end={end}&uris={uris}",
+
+        return restTemplate.exchange(
+                server_url + "/stats?start={start}&end={end}&uris={uris}",
                 HttpMethod.GET,
                 request,
-                String.class,
+                Object.class,
                 params
         );
-
-        if (response.getStatusCode() != HttpStatus.OK) {
-            return Collections.emptyList();
-        }
-
-        return Arrays.asList(objectMapper.readValue(response.getBody(), ViewStatsDto[].class));
     }
 }
