@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.EndpointHitDto;
+import ru.practicum.ViewStatsDto;
 import ru.practicum.service.StatService;
 
 import java.time.LocalDateTime;
@@ -17,12 +18,12 @@ public class StatController {
     private final StatService statService;
 
     @PostMapping(path = "/hit")
-    public ResponseEntity<Object> saveHit(@Validated @RequestBody EndpointHitDto endpointHitDto) {
+    public ResponseEntity<String> saveHit(@Validated @RequestBody EndpointHitDto endpointHitDto) {
         return statService.saveHit(endpointHitDto);
     }
 
     @GetMapping(path = "/stats")
-    public ResponseEntity<Object> getStats(
+    public ResponseEntity<List<ViewStatsDto>> getStats(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
             @RequestParam(required = false) List<String> uris,

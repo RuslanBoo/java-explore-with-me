@@ -21,14 +21,14 @@ public class StatService {
     private final StatRepository statRepository;
     private final EndpointHitMapper endpointHitMapper;
 
-    public ResponseEntity<Object> saveHit(EndpointHitDto endpointHitDto) {
+    public ResponseEntity<String> saveHit(EndpointHitDto endpointHitDto) {
         EndpointHit endpointHit = endpointHitMapper.fromDto(endpointHitDto);
         statRepository.save(endpointHit);
 
         return new ResponseEntity<>("Информация сохранена", HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean isUnique) {
+    public ResponseEntity<List<ViewStatsDto>> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean isUnique) {
         List<ViewStatsDto> stats;
 
         if (uris != null && !uris.isEmpty()) {

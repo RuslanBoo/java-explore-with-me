@@ -3,10 +3,12 @@ package ru.practicum.client;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.EndpointHitDto;
+import ru.practicum.ViewStatsDto;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -28,7 +30,7 @@ public class StatClientImpl implements StatClient {
     }
 
     @Override
-    public ResponseEntity<Object> saveHit(String app, String uri, String ip, LocalDateTime timestamp) {
+    public ResponseEntity<String> saveHit(String app, String uri, String ip, LocalDateTime timestamp) {
         prepareHeader();
 
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
@@ -43,12 +45,12 @@ public class StatClientImpl implements StatClient {
         return this.restTemplate.postForEntity(
                 serverURL + "/hit",
                 entity,
-                Object.class);
+                String.class);
     }
 
     @SneakyThrows
     @Override
-    public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, List<String> uris) {
+    public ResponseEntity<List<ViewStatsDto>> getStats(LocalDateTime start, LocalDateTime end, List<String> uris) {
         prepareHeader();
 
         Map<String, Object> params = new HashMap<>();
@@ -62,7 +64,7 @@ public class StatClientImpl implements StatClient {
                 serverURL + "/stats?start={start}&end={end}&uris={uris}",
                 HttpMethod.GET,
                 request,
-                Object.class,
+                new ParameterizedTypeReference<>() {},
                 params
         );
     }
