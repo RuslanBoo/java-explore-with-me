@@ -32,7 +32,7 @@ public class StatController {
             @RequestParam(defaultValue = "false") boolean unique
     ) {
         if (end.isBefore(start)) {
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         return statService.getStats(start, end, uris, unique);
