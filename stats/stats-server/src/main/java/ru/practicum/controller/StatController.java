@@ -11,6 +11,7 @@ import ru.practicum.ViewStatsDto;
 import ru.practicum.service.StatService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class StatController {
             @RequestParam(defaultValue = "false") boolean unique
     ) {
         if (end.isBefore(start)) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
         }
 
         return statService.getStats(start, end, uris, unique);
