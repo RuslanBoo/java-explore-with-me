@@ -30,7 +30,7 @@ public class StatController {
             @RequestParam(required = false) List<String> uris,
             @RequestParam(defaultValue = "false") boolean unique
     ) {
-        if(end.isBefore(start)){
+        if (end.isBefore(start)) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
