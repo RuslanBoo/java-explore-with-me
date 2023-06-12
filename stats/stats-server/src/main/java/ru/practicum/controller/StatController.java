@@ -31,7 +31,7 @@ public class StatController {
             @RequestParam(defaultValue = "false") boolean unique
     ) {
         if(end.isBefore(start)){
-            new ResponseEntity<>("Start date must be before end date", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
         return statService.getStats(start, end, uris, unique);
