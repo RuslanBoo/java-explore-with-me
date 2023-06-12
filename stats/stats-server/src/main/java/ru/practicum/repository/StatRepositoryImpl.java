@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import ru.practicum.ViewStatsDto;
 import ru.practicum.mapper.ViewStatsMapper;
 import ru.practicum.model.QEndpointHit;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.Collection;

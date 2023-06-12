@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.practicum.events.dto.EventShortDto;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -13,12 +12,12 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public class CompilationDto {
-    int id;
+    private int id;
 
     @NotBlank(message = "Field: title. Error: must not be blank. Value: ${validatedValue}")
     @Size(min = 2, max = 50, message = "Field: title. Error: must not from {min} to {max}. Value: ${validatedValue}")
-    String title;
+    private String title;
 
-    List<EventShortDto> events;
-    boolean pinned;
+    private List<EventShortDto> events;
+    private boolean pinned;
 }

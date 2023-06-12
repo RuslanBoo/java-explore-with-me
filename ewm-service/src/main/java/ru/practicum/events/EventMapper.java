@@ -1,8 +1,16 @@
 package ru.practicum.events;
 
-import org.mapstruct.*;
+import org.mapstruct.InheritConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.practicum.categories.service.CategoryServiceHelper;
-import ru.practicum.events.dto.*;
+import ru.practicum.events.dto.EventFullDto;
+import ru.practicum.events.dto.EventShortDto;
+import ru.practicum.events.dto.NewEventDto;
+import ru.practicum.events.dto.UpdateEventAdminRequest;
+import ru.practicum.events.dto.UpdateEventUserRequest;
 import ru.practicum.events.model.Event;
 
 @Mapper(componentModel = "spring", uses = {CategoryServiceHelper.class}, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

@@ -1,10 +1,19 @@
 package ru.practicum.events.controller;
 
+import javax.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.events.dto.EventFullDto;
 import ru.practicum.events.dto.EventShortDto;
 import ru.practicum.events.dto.NewEventDto;
@@ -14,9 +23,6 @@ import ru.practicum.requests.dto.EventRequestStatusUpdateRequest;
 import ru.practicum.requests.dto.EventRequestStatusUpdateResult;
 import ru.practicum.requests.dto.ParticipationRequestDto;
 import ru.practicum.requests.service.RequestService;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/users/{userId}/events")
@@ -72,7 +78,6 @@ public class EventControllerPrivate {
             @PathVariable int userId,
             @PathVariable int eventId,
             @RequestBody EventRequestStatusUpdateRequest updateRequest) {
-
         EventRequestStatusUpdateResult result = requestService.updateAllByEvent(userId, eventId, updateRequest);
 
         return new ResponseEntity<>(result, HttpStatus.OK);

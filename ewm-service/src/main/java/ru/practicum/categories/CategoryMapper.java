@@ -1,6 +1,10 @@
 package ru.practicum.categories;
 
-import org.mapstruct.*;
+import org.mapstruct.InheritConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.practicum.categories.dto.CategoryDto;
 import ru.practicum.categories.model.Category;
 
