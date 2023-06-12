@@ -54,12 +54,12 @@ public class StatClientImpl implements StatClient {
     @SneakyThrows
     @Override
     public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, List<String> uris) {
-        String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+        String dateFormat = "yyyy-MM-dd HH:mm:ss";
 
         prepareHeader();
         Map<String, Object> params = new HashMap<>();
-        params.put("start", start.format(DateTimeFormatter.ofPattern(DATE_FORMAT)));
-        params.put("end", end.format(DateTimeFormatter.ofPattern(DATE_FORMAT)));
+        params.put("start", start.format(DateTimeFormatter.ofPattern(dateFormat)));
+        params.put("end", end.format(DateTimeFormatter.ofPattern(dateFormat)));
         params.put("uris", String.join(",", uris));
         params.put("isUnique", true);
 
