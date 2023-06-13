@@ -2,13 +2,17 @@ package ru.practicum.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.EndpointHitDto;
 import ru.practicum.ViewStatsDto;
 import ru.practicum.service.StatService;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,6 +33,10 @@ public class StatController {
             @RequestParam(required = false) List<String> uris,
             @RequestParam(defaultValue = "false") boolean unique
     ) {
+        if (end.isBefore(start)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         return statService.getStats(start, end, uris, unique);
     }
 }
