@@ -25,8 +25,8 @@ public class UserControllerAdmin {
 
     @GetMapping("/admin/users")
     public List<UserDto> getAll(@RequestParam(required = false) List<Integer> ids,
-            @RequestParam(defaultValue = "0") Integer from,
-            @RequestParam(defaultValue = "10") Integer size) {
+                                @RequestParam(defaultValue = "0") Integer from,
+                                @RequestParam(defaultValue = "10") Integer size) {
         return userService.findAllByUser(ids, from, size);
     }
 
