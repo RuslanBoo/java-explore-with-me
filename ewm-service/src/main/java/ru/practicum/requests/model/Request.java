@@ -6,6 +6,7 @@ import lombok.Setter;
 import ru.practicum.events.model.Event;
 import ru.practicum.requests.enums.UpdateRequestStatus;
 import ru.practicum.users.model.User;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

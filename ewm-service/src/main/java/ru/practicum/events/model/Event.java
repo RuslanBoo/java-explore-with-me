@@ -7,6 +7,7 @@ import org.hibernate.annotations.Formula;
 import ru.practicum.categories.model.Category;
 import ru.practicum.events.enums.EventState;
 import ru.practicum.users.model.User;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

@@ -12,6 +12,7 @@ import ru.practicum.error.exception.DataNotFoundException;
 import ru.practicum.events.EventMapper;
 import ru.practicum.events.model.Event;
 import ru.practicum.events.service.EventService;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
