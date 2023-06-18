@@ -90,7 +90,7 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
 
         OrderSpecifier orderBy = event.id.asc();
 
-        if(sort != null) {
+        if (sort != null) {
             if (sort.equals(EventSort.RATING)) {
                 orderBy = event.rating.desc().nullsLast();
             } else if (sort.equals(EventSort.EVENT_DATE)) {
