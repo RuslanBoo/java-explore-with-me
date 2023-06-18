@@ -27,4 +27,7 @@ public class EventShortDto {
     private boolean paid;
     private int confirmedRequests;
     private int views;
+    private int likes;
+    private int dislikes;
+    private float rating;
 }

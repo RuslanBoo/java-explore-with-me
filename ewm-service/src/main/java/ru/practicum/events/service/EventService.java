@@ -39,9 +39,9 @@ import java.util.stream.Collectors;
 public class EventService {
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
-    private final UserService userService;
     private final RequestRepository requestRepository;
     private final PaginationService paginationService;
+    private final UserService userService;
     private final StatClient statClient;
     private final ObjectMapper objectMapper;
 
