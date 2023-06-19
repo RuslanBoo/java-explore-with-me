@@ -16,7 +16,6 @@ import ru.practicum.events.service.EventService;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -55,13 +54,9 @@ public class CompilationService {
     }
 
     public Compilation findById(int compilationId) {
-        Optional<Compilation> compilation = compilationRepository.findById(compilationId);
-
-        if (compilation.isEmpty()) {
-            throw new DataNotFoundException(Compilation.class.getName(), compilationId);
-        }
-
-        return compilation.get();
+        return compilationRepository.findById(compilationId)
+                .orElseThrow(() -> new DataNotFoundException(Compilation.class.getName(), compilationId)
+                );
     }
 
     public CompilationDto getById(int compId) {

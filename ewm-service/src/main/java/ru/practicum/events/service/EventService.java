@@ -30,7 +30,6 @@ import ru.practicum.users.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,9 +38,9 @@ import java.util.stream.Collectors;
 public class EventService {
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
-    private final UserService userService;
     private final RequestRepository requestRepository;
     private final PaginationService paginationService;
+    private final UserService userService;
     private final StatClient statClient;
     private final ObjectMapper objectMapper;
 
@@ -75,13 +74,9 @@ public class EventService {
     }
 
     public Event findById(int eventId) {
-        Optional<Event> event = eventRepository.findById(eventId);
-
-        if (event.isEmpty()) {
-            throw new DataNotFoundException(Event.class.getName(), eventId);
-        }
-
-        return event.get();
+        return eventRepository.findById(eventId)
+                .orElseThrow(() -> new DataNotFoundException(Event.class.getName(), eventId)
+                );
     }
 
     public Set<Event> findAllById(Set<Integer> ids) {
@@ -100,13 +95,10 @@ public class EventService {
 
     public EventFullDto getByEventId(int userId, int eventId) {
         userService.checkUserById(userId);
-        Optional<Event> event = eventRepository.findByIdAndInitiatorId(eventId, userId);
-
-        if (event.isEmpty()) {
-            throw new DataNotFoundException(Event.class.getName(), eventId);
-        }
-
-        return prepareFullDto(event.get());
+        return prepareFullDto(
+                eventRepository.findByIdAndInitiatorId(eventId, userId)
+                        .orElseThrow(() -> new DataNotFoundException(Event.class.getName(), eventId))
+        );
     }
 
     public EventFullDto save(int userId, NewEventDto newEventDto) {
