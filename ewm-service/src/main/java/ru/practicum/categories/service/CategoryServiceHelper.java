@@ -14,12 +14,8 @@ public class CategoryServiceHelper {
     private final CategoryRepository categoryRepository;
 
     public Category findById(int id) {
-        Optional<Category> category = categoryRepository.findById(id);
-
-        if (category.isEmpty()) {
-            throw new DataNotFoundException(Category.class.getName(), id);
-        }
-
-        return category.get();
+        return categoryRepository.findById(id)
+                .orElseThrow(() ->  new DataNotFoundException(Category.class.getName(), id)
+        );
     }
 }

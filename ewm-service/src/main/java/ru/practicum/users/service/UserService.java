@@ -30,13 +30,9 @@ public class UserService {
     }
 
     private User findById(int userId) {
-        Optional<User> user = userRepository.findById(userId);
-
-        if (user.isEmpty()) {
-            throw new DataNotFoundException(User.class.getName(), userId);
-        }
-
-        return user.get();
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException(User.class.getName(), userId)
+        );
     }
 
     private void checkName(String name) {

@@ -32,13 +32,9 @@ public class RequestService {
     private final EventService eventService;
 
     private Request findById(int requestId) {
-        Optional<Request> request = requestRepository.findById(requestId);
-
-        if (request.isEmpty()) {
-            throw new DataNotFoundException(Request.class.getName(), requestId);
-        }
-
-        return request.get();
+        return requestRepository.findById(requestId)
+                .orElseThrow(() -> new DataNotFoundException(Request.class.getName(), requestId)
+        );
     }
 
 

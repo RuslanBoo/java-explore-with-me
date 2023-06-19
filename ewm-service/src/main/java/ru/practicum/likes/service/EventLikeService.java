@@ -51,21 +51,15 @@ public class EventLikeService {
     }
 
     private Event findEventById(int eventId) {
-        Optional<Event> event = eventRepository.findById(eventId);
-        if (event.isEmpty()) {
-            throw new DataNotFoundException(Event.class.getName(), eventId);
-        }
-
-        return event.get();
+        return eventRepository.findById(eventId)
+                .orElseThrow(() -> new DataNotFoundException(Event.class.getName(), eventId)
+        );
     }
 
     private EventLike findLikeByUser(int eventId, int userId) {
-        Optional<EventLike> like = eventLikeRepository.findByEventIdAndUserId(eventId, userId);
-        if (like.isEmpty()) {
-            throw new DataNotFoundException(EventLike.class.getName(), eventId);
-        }
-
-        return like.get();
+        return eventLikeRepository.findByEventIdAndUserId(eventId, userId)
+                .orElseThrow(() -> new DataNotFoundException(EventLike.class.getName(), eventId)
+        );
     }
 
     @Transactional
@@ -79,13 +73,15 @@ public class EventLikeService {
 
         Optional<EventLike> eventLike = eventLikeRepository.findByEventIdAndUserId(eventId, userId);
 
-        if (eventLike.isPresent()) {
-            if (eventLike.get().getType().equals(type)) {
-                throw new ConflictException(String.format("User can not post event %s twice", type));
-            } else {
-                eventLikeRepository.delete(eventLike.get());
+        eventLike.ifPresent(
+            like -> {
+                if (like.getType().equals(type)) {
+                    throw new ConflictException(String.format("User can not post event %s twice", type));
+                } else {
+                    eventLikeRepository.delete(like);
+                }
             }
-        }
+        );
 
         EventLike like = EventLike.builder()
                 .userId(userId)
@@ -109,7 +105,7 @@ public class EventLikeService {
         recountEventRating(eventId);
     }
 
-    public List<UserDto> getEventLikeUsers(int eventId, EventLikeType type) {
+    public List<UserDto> getEventLikeUsers(int eventId, EventLikeType type, int from, int size) {
         List<Integer> userIds = eventLikeRepository.findByEventIdAndType(eventId, type)
                 .stream()
                 .map(EventLike::getId)
@@ -119,6 +115,6 @@ public class EventLikeService {
             return new ArrayList<>();
         }
 
-        return userService.findAllByUser(userIds, null, null);
+        return userService.findAllByUser(userIds, from, size);
     }
 }

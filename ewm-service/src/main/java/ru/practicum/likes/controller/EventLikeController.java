@@ -20,7 +20,10 @@ public class EventLikeController {
     private final EventLikeService eventLikeService;
 
     @GetMapping
-    public List<UserDto> getLikes(@PathVariable int eventId, @Valid @RequestParam EventLikeType type) {
-        return eventLikeService.getEventLikeUsers(eventId, type);
+    public List<UserDto> getLikes(@PathVariable int eventId,
+                                  @Valid @RequestParam EventLikeType type,
+                                  @RequestParam(defaultValue = "0") int from,
+                                  @RequestParam(defaultValue = "10") int size) {
+        return eventLikeService.getEventLikeUsers(eventId, type, from, size);
     }
 }

@@ -75,13 +75,9 @@ public class EventService {
     }
 
     public Event findById(int eventId) {
-        Optional<Event> event = eventRepository.findById(eventId);
-
-        if (event.isEmpty()) {
-            throw new DataNotFoundException(Event.class.getName(), eventId);
-        }
-
-        return event.get();
+        return eventRepository.findById(eventId)
+                .orElseThrow(() -> new DataNotFoundException(Event.class.getName(), eventId)
+        );
     }
 
     public Set<Event> findAllById(Set<Integer> ids) {
@@ -100,13 +96,10 @@ public class EventService {
 
     public EventFullDto getByEventId(int userId, int eventId) {
         userService.checkUserById(userId);
-        Optional<Event> event = eventRepository.findByIdAndInitiatorId(eventId, userId);
-
-        if (event.isEmpty()) {
-            throw new DataNotFoundException(Event.class.getName(), eventId);
-        }
-
-        return prepareFullDto(event.get());
+        return prepareFullDto(
+            eventRepository.findByIdAndInitiatorId(eventId, userId)
+                .orElseThrow(() -> new DataNotFoundException(Event.class.getName(), eventId))
+        );
     }
 
     public EventFullDto save(int userId, NewEventDto newEventDto) {

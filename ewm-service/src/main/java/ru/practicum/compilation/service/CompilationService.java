@@ -55,13 +55,9 @@ public class CompilationService {
     }
 
     public Compilation findById(int compilationId) {
-        Optional<Compilation> compilation = compilationRepository.findById(compilationId);
-
-        if (compilation.isEmpty()) {
-            throw new DataNotFoundException(Compilation.class.getName(), compilationId);
-        }
-
-        return compilation.get();
+        return compilationRepository.findById(compilationId)
+                .orElseThrow(() -> new DataNotFoundException(Compilation.class.getName(), compilationId)
+        );
     }
 
     public CompilationDto getById(int compId) {
