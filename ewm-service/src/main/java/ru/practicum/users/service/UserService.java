@@ -32,7 +32,7 @@ public class UserService {
     private User findById(int userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new DataNotFoundException(User.class.getName(), userId)
-        );
+                );
     }
 
     private void checkName(String name) {

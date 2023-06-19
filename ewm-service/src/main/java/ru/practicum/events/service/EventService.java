@@ -30,7 +30,6 @@ import ru.practicum.users.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -77,7 +76,7 @@ public class EventService {
     public Event findById(int eventId) {
         return eventRepository.findById(eventId)
                 .orElseThrow(() -> new DataNotFoundException(Event.class.getName(), eventId)
-        );
+                );
     }
 
     public Set<Event> findAllById(Set<Integer> ids) {
@@ -97,8 +96,8 @@ public class EventService {
     public EventFullDto getByEventId(int userId, int eventId) {
         userService.checkUserById(userId);
         return prepareFullDto(
-            eventRepository.findByIdAndInitiatorId(eventId, userId)
-                .orElseThrow(() -> new DataNotFoundException(Event.class.getName(), eventId))
+                eventRepository.findByIdAndInitiatorId(eventId, userId)
+                        .orElseThrow(() -> new DataNotFoundException(Event.class.getName(), eventId))
         );
     }
 

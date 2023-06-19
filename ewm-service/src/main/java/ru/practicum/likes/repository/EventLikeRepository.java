@@ -14,6 +14,7 @@ import java.util.Optional;
 @Repository
 public interface EventLikeRepository extends JpaRepository<EventLike, Integer> {
     List<EventLike> findByEventIdAndType(int eventId, EventLikeType type);
+
     Optional<EventLike> findByEventIdAndUserId(int eventId, int userId);
 
     @Query(value = "SELECT COUNT(e.id) totalCount, COUNT(CASE WHEN e.like_type = 'LIKE' THEN 1 END) likesCount " +

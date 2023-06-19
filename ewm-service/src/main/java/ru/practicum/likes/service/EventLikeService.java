@@ -53,13 +53,13 @@ public class EventLikeService {
     private Event findEventById(int eventId) {
         return eventRepository.findById(eventId)
                 .orElseThrow(() -> new DataNotFoundException(Event.class.getName(), eventId)
-        );
+                );
     }
 
     private EventLike findLikeByUser(int eventId, int userId) {
         return eventLikeRepository.findByEventIdAndUserId(eventId, userId)
                 .orElseThrow(() -> new DataNotFoundException(EventLike.class.getName(), eventId)
-        );
+                );
     }
 
     @Transactional
@@ -74,13 +74,13 @@ public class EventLikeService {
         Optional<EventLike> eventLike = eventLikeRepository.findByEventIdAndUserId(eventId, userId);
 
         eventLike.ifPresent(
-            like -> {
-                if (like.getType().equals(type)) {
-                    throw new ConflictException(String.format("User can not post event %s twice", type));
-                } else {
-                    eventLikeRepository.delete(like);
+                like -> {
+                    if (like.getType().equals(type)) {
+                        throw new ConflictException(String.format("User can not post event %s twice", type));
+                    } else {
+                        eventLikeRepository.delete(like);
+                    }
                 }
-            }
         );
 
         EventLike like = EventLike.builder()

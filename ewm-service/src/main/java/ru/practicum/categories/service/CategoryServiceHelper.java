@@ -6,8 +6,6 @@ import ru.practicum.categories.model.Category;
 import ru.practicum.categories.repository.CategoryRepository;
 import ru.practicum.error.exception.DataNotFoundException;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceHelper {
@@ -15,7 +13,7 @@ public class CategoryServiceHelper {
 
     public Category findById(int id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() ->  new DataNotFoundException(Category.class.getName(), id)
-        );
+                .orElseThrow(() -> new DataNotFoundException(Category.class.getName(), id)
+                );
     }
 }

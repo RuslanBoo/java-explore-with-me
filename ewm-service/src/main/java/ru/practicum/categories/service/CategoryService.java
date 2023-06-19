@@ -32,7 +32,7 @@ public class CategoryService {
     private Category findById(int categoryId) {
         return categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new DataNotFoundException(Category.class.getName(), categoryId)
-        );
+                );
     }
 
     private void checkName(int categoryId, String name) {

@@ -20,7 +20,6 @@ import ru.practicum.users.service.UserService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +33,7 @@ public class RequestService {
     private Request findById(int requestId) {
         return requestRepository.findById(requestId)
                 .orElseThrow(() -> new DataNotFoundException(Request.class.getName(), requestId)
-        );
+                );
     }
 
 
